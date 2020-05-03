@@ -4,6 +4,7 @@ import logo from './logo.svg';
 import { Navbar,NavbarBrand } from 'reactstrap'
 // Menu Component
 import Menu from './components/MenuComponent';
+import Dishdetail from './components/DishdetailComponent';
 // Import the Dishes
 import { DISHES } from './shared/dishes';
 import './App.css';
@@ -27,7 +28,6 @@ class App extends Component {
         <NavbarBrand href="/">Ristorante Con Fusion</NavbarBrand>
       </div>
     </Navbar>
-    /** Comment- We pass dishes to Menu i.e. the Child of App class */
     <Menu dishes={this.state.dishes}/>
     </div>
   );
