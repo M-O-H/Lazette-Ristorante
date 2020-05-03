@@ -1,12 +1,24 @@
-import React from 'react';
+import React, { Component } from 'react';
 import logo from './logo.svg';
 // First Component from ReactStrap
 import { Navbar,NavbarBrand } from 'reactstrap'
-// Menu COmponent
+// Menu Component
 import Menu from './components/MenuComponent';
+// Import the Dishes
+import { DISHES } from './shared/dishes';
 import './App.css';
 
-function App() {
+class App extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      dishes: DISHES
+    };
+  }
+
+  render(){
+
   return (
     <div>
     
@@ -15,10 +27,11 @@ function App() {
         <NavbarBrand href="/">Ristorante Con Fusion</NavbarBrand>
       </div>
     </Navbar>
-    
-    <Menu/>
+    /** Comment- We pass dishes to Menu i.e. the Child of App class */
+    <Menu dishes={this.state.dishes}/>
     </div>
   );
+  }
 }
 
 export default App;
