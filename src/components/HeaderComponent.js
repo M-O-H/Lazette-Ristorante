@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 // First Component from ReactStrap
-
+import {Navbar, Jumbotron, NavbarBrand} from 'reactstrap'
 
 // The reason for using class component in place of 
 // Functional comp. is because we have to maintain some UI state

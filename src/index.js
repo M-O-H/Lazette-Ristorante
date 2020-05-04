@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 // Get the Default BootStrap CSS
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'font-awesome/css/font-awesome.css';
-import 'bootstrap-social/bootstrap-social.css';
+import '../node_modules/bootstrap-social/bootstrap-social.css';
 // Custom CSS to overwrite the Default BootStrap
 import './index.css';
 import App from './App';

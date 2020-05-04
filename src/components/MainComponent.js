@@ -10,7 +10,7 @@ import Dishdetail from './DishdetailComponent';
 // Header Component
 import Header from './HeaderComponent';
 // Footer Component
-import Footer from '/FooterComponent';
+import Footer from './FooterComponent';
 
 
 
