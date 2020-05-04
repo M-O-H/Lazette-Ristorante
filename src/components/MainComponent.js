@@ -1,14 +1,17 @@
 // This is like a Pseudo Container Component
 // Duplicate App.js
 import React, { Component } from 'react';
-// First Component from ReactStrap
-import { Navbar,NavbarBrand } from 'reactstrap'
 // Menu Component
 import Menu from './MenuComponent';
 // Import the Dishes
 import { DISHES } from '../shared/dishes';
 // DishDetail import here
 import Dishdetail from './DishdetailComponent';
+// Header Component
+import Header from './HeaderComponent';
+// Footer Component
+import Footer from '/FooterComponent';
+
 
 
 class Main extends Component {
@@ -34,14 +37,10 @@ class Main extends Component {
 
   return (
     <div>
-    
-    <Navbar dark color="primary">
-      <div className="container">
-        <NavbarBrand href="/">Ristorante Con Fusion</NavbarBrand>
-      </div>
-    </Navbar>
+    <Header/>
     <Menu dishes={this.state.dishes} onClick={(dishId)=>this.onDishSelect(dishId)}/>
     <Dishdetail dish={this.state.dishes.filter((dish) => (dish.id === this.state.selectedDish))[0]} />
+    <Footer/>
     </div>
   );
   }
