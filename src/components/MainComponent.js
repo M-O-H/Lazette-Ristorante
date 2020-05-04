@@ -11,6 +11,10 @@ import Dishdetail from './DishdetailComponent';
 import Header from './HeaderComponent';
 // Footer Component
 import Footer from './FooterComponent';
+// Home Component
+import Home from './HomeComponent';
+// Router
+import { Switch, Route, Redirect } from 'react-router-dom';
 
 
 
@@ -20,26 +24,28 @@ class Main extends Component {
 
     this.state = {
       dishes: DISHES,
-      selectedDish: 0
     };
-    console.log(this.props)
-
   }
- 
-    //setState Methods
-    onDishSelect(dishId){
-        this.setState({
-            selectedDish:dishId
-        });
-    }
 
+  // One way to Render a Component is like const HomePage
+  // One is like to render the Menu component 'inline'
   render(){
+
+    const HomePage = () => {
+      return(
+          <Home 
+          />
+      );
+    }
 
   return (
     <div>
     <Header/>
-    <Menu dishes={this.state.dishes} onClick={(dishId)=>this.onDishSelect(dishId)}/>
-    <Dishdetail dish={this.state.dishes.filter((dish) => (dish.id === this.state.selectedDish))[0]} />
+      <Switch>
+        <Route path="/home" component={HomePage}/>
+        <Route exact path="/menu" component={()=><Menu dishes={this.state.dishes}></Menu>}/>
+        <Redirect to="/home" />
+      </Switch>
     <Footer/>
     </div>
   );
