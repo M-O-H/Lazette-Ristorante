@@ -2,40 +2,33 @@
 
 
 // Imports
-import React, { Component } from 'react';
+import React from 'react';
 import { Media } from 'reactstrap';
 import { Card, CardImg, CardImgOverlay, CardText, CardBody,
     CardTitle } from 'reactstrap';
-import Dishdetail from './DishdetailComponent';
 
 
-// Component is defines like this
-class Menu extends Component {
-    constructor(props){
-        super(props);
-
-        this.state = {
-            selectedDish: {}
-        };
+// Component is defined like this
+// insted of input as (props), we destructured it to {dish, onClick}
+    function RenderMenuItem({dish, onClick}){
+        return(
+            <Card onClick={()=>onClick(dish.id)}>
+                <CardImg src={dish.image} alt={dish.name} width="100%"/>
+                <CardImgOverlay body className="ml-5">
+                <CardTitle>{dish.name}</CardTitle>
+            </CardImgOverlay>
+            </Card>
+        );
     }
+   
+// Aliter way to implement a Funcitonal component   
+// Here we input (props) instead of destructuring 
+    const Menu = (props) => {
 
-    //setState Methods
-    onDishSelect(dish){
-        this.setState({
-            selectedDish:dish
-        })
-    }
-
-    render(){
-        const menu = this.props.dishes.map((dish) => {
+        const menu = props.dishes.map((dish) => {
             return (
-                <div className="col-12 col-md-5 mt-5 m-1">
-                    <Card key = {dish.id} onClick={()=>this.onDishSelect(dish)}>
-                        <CardImg src={dish.image} alt={dish.name} width="100%"/>
-                        <CardImgOverlay body className="ml-5">
-                            <CardTitle>{dish.name}</CardTitle>
-                        </CardImgOverlay>
-                    </Card>
+                <div key = {dish.id} className="col-12 col-md-5 mt-5 m-1">
+                    <RenderMenuItem dish={dish} onClick={props.onClick}/>
                 </div>
             )
         });
@@ -45,12 +38,13 @@ class Menu extends Component {
                 <div className="row">
                     {menu}
                 </div>
-                <Dishdetail passed = {this.state.selectedDish}/>
             </div> 
            
         );
     }
-}
+
+    
+
 
 
 // Exporting the Component

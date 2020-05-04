@@ -8,6 +8,7 @@ import { Card, CardImg, CardImgOverlay, CardText, CardBody,
 class Dishdetail extends Component{
     constructor(props){
         super(props);
+        console.log(this.props)
         this.state = {               
         }
     }
@@ -44,7 +45,7 @@ class Dishdetail extends Component{
                 <div key={comment.id}>
                 <ul className="list-unstyled">
                     <li>{comment.comment}</li>
-                    <li>-- {comment.author} {comment.date}</li>
+                    <li>-- {comment.author} {new Intl.DateTimeFormat('en-US', {year: 'numeric',month:'short',day:'2-digit'}).format(new Date(Date.parse(comment.date)))}</li>
                 </ul>
                 </div>);
         })}
@@ -54,11 +55,13 @@ class Dishdetail extends Component{
 
     render(){
         return (
+        <div className="container">
         <div className="row">
         <div className="col-12 col-md-5 col-xs-12 col-sm-12 col-lg-5 col-xl-5 m-1">
-        {this.renderDish(this.props.passed)}
+        {this.renderDish(this.props.dish)}
         </div>
-        {this.renderComments(this.props.passed.comments)}
+        {this.renderComments(this.props.dish.comments)}
+        </div>
         </div>
         );
     };
