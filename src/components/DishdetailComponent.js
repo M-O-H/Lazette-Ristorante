@@ -3,7 +3,9 @@
 //Imports
 import React, { Component } from 'react';
 import { Card, CardImg, CardImgOverlay, CardText, CardBody,
-    CardTitle } from 'reactstrap';
+    CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
+    import {Link} from 'react-router-dom';
+
 
 class Dishdetail extends Component{
     constructor(props){
@@ -56,11 +58,17 @@ class Dishdetail extends Component{
     render(){
         return (
         <div className="container">
+
+        <Breadcrumb>
+        <BreadcrumbItem><Link to="/menu">Menu</Link></BreadcrumbItem>
+        <BreadcrumbItem active>{this.props.dish.name}</BreadcrumbItem>
+        </Breadcrumb>
+
         <div className="row">
         <div className="col-12 col-md-5 col-xs-12 col-sm-12 col-lg-5 col-xl-5 m-1">
         {this.renderDish(this.props.dish)}
         </div>
-        {this.renderComments(this.props.dish.comments)}
+        {this.renderComments(this.props.comments)}
         </div>
         </div>
         );
