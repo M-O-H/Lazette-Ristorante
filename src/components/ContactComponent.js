@@ -5,6 +5,7 @@ import {
   Button,
   Form,
   FormGroup,
+  FormFeedback,
   Label,
   Input,
   Col,
@@ -25,10 +26,19 @@ class Contact extends Component {
       agree: false,
       contactType: "Tel.",
       message: "",
+      touched: {
+        // touched means if the user changes (or touches), then only validate.
+        // Let is validate for 4 these only:
+        firstname: false,
+        lastname: false,
+        telnum: false,
+        email: false,
+      },
     };
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleBlur = this.handleBlur.bind(this);
   }
 
   //'event' carries info- whivh particular input is changed
@@ -51,7 +61,52 @@ class Contact extends Component {
     event.preventDefault();
   }
 
+  handleBlur = (feild) => (evt) => {
+    this.setState({
+      // New = Old + Changed
+      touched: { ...this.state.touched, [feild]: true },
+    });
+  };
+
+  validate(firstname, lastname, telnum, email) {
+    const errors = {
+      firstname: "",
+      lastname: "",
+      telnum: "",
+      email: "",
+    };
+    if (this.state.touched.firstname && firstname.length < 3) {
+      errors.firstname = "First Name should be >= 3 characs.";
+    } else if (this.state.touched.firstname && firstname.length > 10) {
+      errors.firstname = "First Name should be < 10 characs.";
+    }
+
+    if (this.state.touched.lastname && lastname.length < 3) {
+      errors.lastname = "Last Name should be >= 3 characs.";
+    } else if (this.state.touched.lastname && lastname.length > 10) {
+      errors.lastname = "Last Name should be < 10 characs.";
+    }
+
+    const reg = /^\d+$/; //This REGEX says that the string of characters should be numbers.
+    if (this.state.touched.telnum && !reg.test(telnum))
+      errors.telnum = "Tel. no should contain only numbers.";
+
+    if (
+      this.state.touched.email &&
+      email.split("").filter((x) => x === "@").length !== 1
+    ) {
+      errors.email = "Email should contain the @ sign";
+    }
+  }
+
   render() {
+    const errors = this.validate(
+      this.firstname,
+      this.lastname,
+      this.telnum,
+      this.email
+    );
+
     return (
       <div className="container">
         <div className="row">
@@ -130,8 +185,12 @@ class Contact extends Component {
                     name="firstname"
                     placeholder="First Name"
                     value={this.state.firstname}
+                    valid={errors.firstname === ""}
+                    invalid={errors.firstname !== ""}
+                    onBlur={this.handleBlur("firstname")}
                     onChange={this.handleInputChange}
                   />
+                  <FormFeedback>{errors.firstname}</FormFeedback>
                 </Col>
               </FormGroup>
               <FormGroup row>
@@ -145,8 +204,12 @@ class Contact extends Component {
                     name="lastname"
                     placeholder="Last Name"
                     value={this.state.lastname}
+                    valid={errors.lastname === ""}
+                    invalid={errors.lastname !== ""}
+                    onBlur={this.handleBlur("lastname")}
                     onChange={this.handleInputChange}
                   />
+                  <FormFeedback>{errors.lastname}</FormFeedback>
                 </Col>
               </FormGroup>
               <FormGroup row>
@@ -160,8 +223,12 @@ class Contact extends Component {
                     name="telnum"
                     placeholder="Tel. number"
                     value={this.state.telnum}
+                    value={this.state.telnum}
+                    valid={errors.telnum === ""}
+                    onBlur={this.handleBlur("telnum")}
                     onChange={this.handleInputChange}
                   />
+                  <FormFeedback>{errors.telnum}</FormFeedback>
                 </Col>
               </FormGroup>
               <FormGroup row>
@@ -175,8 +242,12 @@ class Contact extends Component {
                     name="email"
                     placeholder="Email"
                     value={this.state.email}
+                    valid={errors.email === ""}
+                    invalid={errors.email !== ""}
+                    onBlur={this.handleBlur("email")}
                     onChange={this.handleInputChange}
                   />
+                  <FormFeedback>{errors.email}</FormFeedback>
                 </Col>
               </FormGroup>
               <FormGroup row>
