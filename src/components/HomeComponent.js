@@ -2,6 +2,8 @@ import React from 'react';
 import { Card, CardImg, CardText, CardBody,
     CardTitle, CardSubtitle} from 'reactstrap';
 
+// Since we passed one item (say dish, promotion), we destructure it in {item}
+// Also, only leaders have designation != null
 function RenderCard({item}) {
 
     return(
@@ -17,6 +19,7 @@ function RenderCard({item}) {
 
 }
 
+// We receive dish, promotion, leader as props from MainComponent and pass it to RenderCard Component
 function Home(props) {
     return(
         <div className="container">

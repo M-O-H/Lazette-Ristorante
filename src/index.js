@@ -1,10 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-// Get the Default BootStrap CSS
+// Get the Default BootStrap , fontawesome, B-Social CSS's
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'font-awesome/css/font-awesome.css';
 import '../node_modules/bootstrap-social/bootstrap-social.css';
-// Custom CSS to overwrite the Default BootStrap
+// Custom CSS to overwrite the Default BootStrap (Uses Font Awesome Fonts)
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';

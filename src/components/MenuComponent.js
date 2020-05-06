@@ -6,12 +6,13 @@ import React from 'react';
 import { Media } from 'reactstrap';
 import { Card, CardImg, CardImgOverlay, CardText, CardBody,
     CardTitle, Breadcrumb, BreadcrumbItem } from 'reactstrap';
-    import {Link} from 'react-router-dom';
+import {Link} from 'react-router-dom';
 
 
 // Component is defined like this
 // insted of input as (props), we destructured it to {dish, onClick}
-    function RenderMenuItem({dish, onClick}){
+// We passed props called dish and destructure it into {dish}
+    function RenderMenuItem({dish}){
         return(
             <Card>
             <Link to={`/menu/${dish.id}`}>
