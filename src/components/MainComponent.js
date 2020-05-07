@@ -16,7 +16,7 @@ import Contact from "./ContactComponent";
 // About Component
 import About from "./AboutComponent";
 // Import the ACTION
-import { addComment } from "../redux/ActionCreators";
+import { addComment, fetchDishes } from "../redux/ActionCreators";
 
 // Router
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
@@ -37,13 +37,20 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
   addComment: (dishId, rating, author, comment) =>
     dispatch(addComment(dishId, rating, author, comment)),
+  fetchDishes: () => {
+    dispatch(fetchDishes());
+  },
 });
 
 class Main extends Component {
   constructor(props) {
     super(props);
-
     //this.state = {};
+  }
+
+  // Executes as soon as a Component is Mounted.
+  componentDidMount() {
+    this.props.fetchDishes();
   }
 
   // One way to Render a Component is like- const HomePage one.
@@ -52,9 +59,11 @@ class Main extends Component {
     const HomePage = () => {
       return (
         <Home
-          dish={this.props.dishes.filter((dish) => dish.featured)[0]}
+          dish={this.props.dishes.dishes.filter((dish) => dish.featured)[0]}
           // Only That dish will go which is featured=true in dishes object array.
           // We pass 'dish' as props to Home Component
+          dishesLoading={this.props.dishes.isLoading}
+          dishesErrMess={this.props.dishes.errMess}
           promotion={this.props.promotions.filter((promo) => promo.featured)[0]}
           // lly for promotions
           // promotion as props to Home Comp.
@@ -80,10 +89,12 @@ class Main extends Component {
       return (
         <Dishdetail
           dish={
-            this.props.dishes.filter(
+            this.props.dishes.dishes.filter(
               (dish) => dish.id === parseInt(match.params.dishId, 10)
             )[0]
           }
+          isLoading={this.props.dishes.isLoading}
+          errMess={this.props.dishes.errMess}
           comments={this.props.comments.filter(
             (comment) => comment.dishId === parseInt(match.params.dishId, 10)
           )}
