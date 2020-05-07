@@ -50,6 +50,12 @@ class CommentForm extends Component {
   handleSubmit(values) {
     console.log("Current State is: " + JSON.stringify(values));
     alert("Current State is: " + JSON.stringify(values));
+    this.props.addComment(
+      this.props.dishId,
+      values.rating,
+      values.author,
+      values.comment
+    );
     // event.preventDefault();
   }
 
@@ -163,7 +169,7 @@ class Dishdetail extends Component {
     }
   }
 
-  renderComments(comments) {
+  renderComments(comments, addComment, dishId) {
     if (comments == null) {
       return <div></div>;
     }
@@ -187,7 +193,7 @@ class Dishdetail extends Component {
             </div>
           );
         })}
-        <CommentForm />
+        <CommentForm dishId={dishId} addComment={addComment} />
       </div>
     );
   }
@@ -206,7 +212,11 @@ class Dishdetail extends Component {
           <div className="col-12 col-md-5 col-xs-12 col-sm-12 col-lg-5 col-xl-5 m-1">
             {this.renderDish(this.props.dish)}
           </div>
-          {this.renderComments(this.props.comments)}
+          {this.renderComments(
+            this.props.comments,
+            this.props.addComment,
+            this.props.dish.id
+          )}
         </div>
       </div>
     );
