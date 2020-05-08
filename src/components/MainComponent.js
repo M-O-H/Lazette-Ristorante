@@ -16,7 +16,13 @@ import Contact from "./ContactComponent";
 // About Component
 import About from "./AboutComponent";
 // Import the ACTION
-import { addComment, fetchDishes } from "../redux/ActionCreators";
+import {
+  addComment,
+  fetchDishes,
+  fetchComments,
+  fetchLeaders,
+  fetchPromos,
+} from "../redux/ActionCreators";
 import { actions } from "react-redux-form";
 
 // Router
@@ -44,6 +50,9 @@ const mapDispatchToProps = (dispatch) => ({
   resetFeedbackForm: () => {
     dispatch(actions.reset("feedback"));
   },
+  fetchComments: () => dispatch(fetchComments()),
+  fetchPromos: () => dispatch(fetchPromos()),
+  fetchLeaders: () => dispatch(fetchLeaders()),
 });
 
 class Main extends Component {
@@ -55,6 +64,9 @@ class Main extends Component {
   // Executes as soon as a Component is Mounted.
   componentDidMount() {
     this.props.fetchDishes();
+    this.props.fetchComments();
+    this.props.fetchPromos();
+    this.props.fetchLeaders();
   }
 
   // One way to Render a Component is like- const HomePage one.
@@ -68,11 +80,19 @@ class Main extends Component {
           // We pass 'dish' as props to Home Component
           dishesLoading={this.props.dishes.isLoading}
           dishesErrMess={this.props.dishes.errMess}
-          promotion={this.props.promotions.filter((promo) => promo.featured)[0]}
+          promotion={
+            this.props.promotions.promotions.filter(
+              (promo) => promo.featured
+            )[0]
+          }
           // lly for promotions
           // promotion as props to Home Comp.
+          promoLoading={this.props.promotions.isLoading}
+          promoErrMess={this.props.promotions.errMess}
           leader={this.props.leaders.filter((leader) => leader.featured)[0]}
           // leader as props to Home Comp.
+          leaderLoading={this.props.leaders.isLoading}
+          leaderErrMess={this.props.leaders.errMess}
         />
       );
     };
@@ -99,9 +119,10 @@ class Main extends Component {
           }
           isLoading={this.props.dishes.isLoading}
           errMess={this.props.dishes.errMess}
-          comments={this.props.comments.filter(
+          comments={this.props.comments.comments.filter(
             (comment) => comment.dishId === parseInt(match.params.dishId, 10)
           )}
+          commentsErrMess={this.props.comments.errMess}
           addComment={this.props.addComment}
         />
       );

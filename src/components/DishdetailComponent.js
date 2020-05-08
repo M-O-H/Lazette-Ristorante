@@ -26,6 +26,7 @@ import {
 import { Control, LocalForm, Errors } from "react-redux-form";
 import { Link } from "react-router-dom";
 import { Loading } from "./LoadingComponent";
+import { baseUrl } from "../shared/baseUrl";
 
 //For Validation
 const maxLength = (len) => (val) => !val || val.length <= len;
@@ -158,7 +159,7 @@ class Dishdetail extends Component {
     if (dish != null) {
       return (
         <Card>
-          <CardImg src={dish.image} alt={dish.name} width="100%" />
+          <CardImg src={baseUrl + dish.image} alt={dish.name} width="100%" />
           <CardBody>
             <CardTitle>{dish.name}</CardTitle>
             <CardText>{dish.description}</CardText>
