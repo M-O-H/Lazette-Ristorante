@@ -27,6 +27,7 @@ import { Control, LocalForm, Errors } from "react-redux-form";
 import { Link } from "react-router-dom";
 import { Loading } from "./LoadingComponent";
 import { baseUrl } from "../shared/baseUrl";
+import { FadeTransform, Fade, Stagger } from "react-animation-components";
 
 //For Validation
 const maxLength = (len) => (val) => !val || val.length <= len;
@@ -52,7 +53,7 @@ class CommentForm extends Component {
   handleSubmit(values) {
     console.log("Current State is: " + JSON.stringify(values));
     alert("Current State is: " + JSON.stringify(values));
-    this.props.addComment(
+    this.props.postComment(
       this.props.dishId,
       values.rating,
       values.author,
@@ -158,44 +159,55 @@ class Dishdetail extends Component {
   renderDish(dish) {
     if (dish != null) {
       return (
-        <Card>
-          <CardImg src={baseUrl + dish.image} alt={dish.name} width="100%" />
-          <CardBody>
-            <CardTitle>{dish.name}</CardTitle>
-            <CardText>{dish.description}</CardText>
-          </CardBody>
-        </Card>
+        <FadeTransform
+          in
+          transformProps={{
+            exitTransform: "scale(0.5) translateY(-50%)",
+          }}
+        >
+          <Card>
+            <CardImg src={baseUrl + dish.image} alt={dish.name} width="100%" />
+            <CardBody>
+              <CardTitle>{dish.name}</CardTitle>
+              <CardText>{dish.description}</CardText>
+            </CardBody>
+          </Card>
+        </FadeTransform>
       );
     } else {
       return <div></div>;
     }
   }
 
-  renderComments(comments, addComment, dishId) {
+  renderComments(comments, postComment, dishId) {
     if (comments == null) {
       return <div></div>;
     }
     return (
       <div className="col-12 col-md-5 col-xs-12 col-sm-12 col-lg-5 col-xl-5 m-1">
         <h4>Comments</h4>
-        {comments.map((comment) => {
-          return (
-            <div key={comment.id}>
-              <ul className="list-unstyled">
-                <li>{comment.comment}</li>
-                <li>
-                  -- {comment.author}{" "}
-                  {new Intl.DateTimeFormat("en-US", {
-                    year: "numeric",
-                    month: "short",
-                    day: "2-digit",
-                  }).format(new Date(Date.parse(comment.date)))}
-                </li>
-              </ul>
-            </div>
-          );
-        })}
-        <CommentForm dishId={dishId} addComment={addComment} />
+        <Stagger in>
+          {comments.map((comment) => {
+            return (
+              <Fade in>
+                <div key={comment.id}>
+                  <ul className="list-unstyled">
+                    <li>{comment.comment}</li>
+                    <li>
+                      -- {comment.author}{" "}
+                      {new Intl.DateTimeFormat("en-US", {
+                        year: "numeric",
+                        month: "short",
+                        day: "2-digit",
+                      }).format(new Date(Date.parse(comment.date)))}
+                    </li>
+                  </ul>
+                </div>
+              </Fade>
+            );
+          })}
+        </Stagger>
+        <CommentForm dishId={dishId} postComment={postComment} />
       </div>
     );
   }
@@ -233,7 +245,7 @@ class Dishdetail extends Component {
             </div>
             {this.renderComments(
               this.props.comments,
-              this.props.addComment,
+              this.props.postComment,
               this.props.dish.id
             )}
           </div>
