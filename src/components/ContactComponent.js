@@ -10,6 +10,7 @@ import {
 } from "reactstrap";
 import { Control, Form, Errors, actions } from "react-redux-form";
 import { Link } from "react-router-dom";
+import { baseUrl } from "../shared/baseUrl";
 
 // Funcitons for Validation
 const required = (val) => val && val.length;
@@ -32,6 +33,16 @@ class Contact extends Component {
     alert("Current State is: " + JSON.stringify(values));
     this.props.resetFeedbackForm();
     // event.preventDefault();
+    this.props.postFeedback(
+      values.firstname,
+      values.lastname,
+      values.telnum,
+      values.email,
+      values.contactType,
+      values.agree,
+      values.message
+      //! Date See How
+    );
   }
 
   render() {

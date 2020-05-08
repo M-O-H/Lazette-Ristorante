@@ -17,6 +17,7 @@ import Contact from "./ContactComponent";
 import About from "./AboutComponent";
 // Import the ACTION
 import {
+  postFeedback,
   postComment,
   fetchDishes,
   fetchComments,
@@ -45,6 +46,26 @@ const mapStateToProps = (state) => {
   };
 };
 const mapDispatchToProps = (dispatch) => ({
+  postFeedback: (
+    firstname,
+    lastname,
+    telnum,
+    email,
+    contactType,
+    agree,
+    message
+  ) =>
+    dispatch(
+      postFeedback(
+        firstname,
+        lastname,
+        telnum,
+        email,
+        contactType,
+        agree,
+        message
+      )
+    ),
   postComment: (dishId, rating, author, comment) =>
     dispatch(postComment(dishId, rating, author, comment)),
   fetchDishes: () => {
@@ -165,7 +186,10 @@ class Main extends Component {
                 exact
                 path="/contactus"
                 component={() => (
-                  <Contact resetFeedbackForm={this.props.resetFeedbackForm} />
+                  <Contact
+                    resetFeedbackForm={this.props.resetFeedbackForm}
+                    postFeedback={this.props.postFeedback}
+                  />
                 )}
               />
               <Route exact path="/aboutus" component={AboutPage} />

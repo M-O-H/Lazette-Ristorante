@@ -10,6 +10,7 @@ import {
 import { Link } from "react-router-dom";
 import { baseUrl } from "../shared/baseUrl";
 import { Loading } from "./LoadingComponent";
+import { FadeTransform, Fade, Stagger } from "react-animation-components";
 
 function RenderLeader({ leader }) {
   return (
@@ -27,6 +28,7 @@ function RenderLeader({ leader }) {
 }
 
 function About(props) {
+  //* Conditional RENDERING
   let leaders = null;
   if (props.isLoading) {
     return <Loading />;
@@ -37,9 +39,11 @@ function About(props) {
       return (
         //<p>Leader {leader.name}</p>
         //<RenderLeader leader={leader}/>
-        <div key={leader.id} className="col-12 col-md-12 m-1">
-          <RenderLeader leader={leader} />
-        </div>
+        <Fade in>
+          <div key={leader.id} className="col-12 col-md-12 m-1">
+            <RenderLeader leader={leader} />
+          </div>
+        </Fade>
       );
     });
   }
@@ -120,7 +124,9 @@ function About(props) {
           <h2>Corporate Leadership</h2>
         </div>
         <div className="col-12">
-          <Media list>{leaders}</Media>
+          <Media list>
+            <Stagger in>{leaders}</Stagger>
+          </Media>
         </div>
       </div>
     </div>
