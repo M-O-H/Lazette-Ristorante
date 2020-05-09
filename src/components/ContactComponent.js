@@ -41,7 +41,6 @@ class Contact extends Component {
       values.contactType,
       values.agree,
       values.message
-      //! Date See How
     );
   }
 
