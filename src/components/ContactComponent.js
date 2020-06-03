@@ -59,7 +59,7 @@ class Contact extends Component {
             <hr />
           </div>
         </div>
-        <div className="row row-content">
+        <div className="row row-content abt-shade">
           <div className="col-12">
             <h3>Location Information</h3>
           </div>
@@ -105,7 +105,6 @@ class Contact extends Component {
             </div>
           </div>
         </div>
-        // FORM GOES HERE
         <div className="row row-content">
           <div className="col-12">
             <h3>Send us your Feedback</h3>
@@ -272,7 +271,7 @@ class Contact extends Component {
               </Row>
               <Row className="form-group">
                 <Col md={{ size: 10, offset: 2 }}>
-                  <Button type="submit" color="primary">
+                  <Button type="submit" className="khatta-color text-white" >
                     Send Feedback
                   </Button>
                 </Col>

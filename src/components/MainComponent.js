@@ -15,6 +15,8 @@ import Home from "./HomeComponent";
 import Contact from "./ContactComponent";
 // About Component
 import About from "./AboutComponent";
+// Recipie Component
+import Recipie from "./RecipieComponent";
 // Import the ACTION
 import {
   postFeedback,
@@ -193,6 +195,7 @@ class Main extends Component {
                 )}
               />
               <Route exact path="/aboutus" component={AboutPage} />
+              <Route path="/recipie" component={Recipie} />
               <Redirect to="/home" />
             </Switch>
           </CSSTransition>

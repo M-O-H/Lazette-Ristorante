@@ -62,11 +62,11 @@ function About(props) {
           <hr />
         </div>
       </div>
-      <div className="row row-content">
+      <div className="row row-content abt-shade">
         <div className="col-12 col-md-6">
           <h2>Our History</h2>
           <p>
-            Started in 2010, Ristorante con Fusion quickly established itself as
+            Started in 1952, Ristorante Lazette quickly established itself as
             a culinary icon par excellence in Hong Kong. With its unique brand
             of world fusion cuisine that can be found nowhere else, it enjoys
             patronage from the A-list clientele in Hong Kong. Featuring four of
@@ -82,7 +82,7 @@ function About(props) {
         </div>
         <div className="col-12 col-md-5">
           <Card>
-            <CardHeader className="bg-primary text-white">
+            <CardHeader className="khatta-color text-white">
               Facts At a Glance
             </CardHeader>
             <CardBody>

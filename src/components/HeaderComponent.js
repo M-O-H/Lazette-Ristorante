@@ -52,11 +52,11 @@ class Header extends Component {
     this.toggleModal();
     alert(
       "Username: " +
-        this.username.value +
-        " Password: " +
-        this.password.value +
-        " Remember: " +
-        this.remember.checked
+      this.username.value +
+      " Email-Id: " +
+      this.password.value +
+      " Remember: " +
+      this.remember.checked
     );
     event.preventDefault();
   }
@@ -64,8 +64,8 @@ class Header extends Component {
   render() {
     return (
       <React.Fragment>
-        <Navbar dark expand="md">
-          <div className="container">
+        <Navbar expand="md" className="Mynav">
+          <div className="container-fluid">
             <NavbarToggler onClick={this.toggleNav} />
             <NavbarBrand className="mr-auto" href="/">
               <img
@@ -88,6 +88,11 @@ class Header extends Component {
                   </NavLink>
                 </NavItem>
                 <NavItem>
+                  <NavLink className="nav-link" to="/recipie">
+                    <span className="fa fa-cutlery fa-md"></span> Recipie Man
+                </NavLink>
+                </NavItem>
+                <NavItem>
                   <NavLink className="nav-link" to="/menu">
                     <span className="fa fa-list fa-lg"></span> Menu
                   </NavLink>
@@ -102,31 +107,21 @@ class Header extends Component {
 
               <Nav className="ml-auto" navbar>
                 <NavItem>
-                  <Button outline onClick={this.toggleModal}>
-                    <span className="fa fa-sign-in fa-lg"></span> Login
+                  <Button outline onClick={this.toggleModal} className="khatta-color text-white">
+                    <span className="fa fa-sign-in fa-lg"></span> Lazette Letters
                   </Button>
                 </NavItem>
               </Nav>
             </Collapse>
           </div>
         </Navbar>
-        <Jumbotron>
-          <div className="container">
-            <div className="row row-header">
-              <div className="col-12 col-sm-6">
-                <h1>Ristorante con Fusion</h1>
-                <p>
-                  We take inspiration from the World's best cuisines, and create
-                  a unique fusion experience. Our lipsmacking creations will
-                  tickle your culinary senses!
-                </p>
-              </div>
-            </div>
-          </div>
-        </Jumbotron>
+
         <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
-          <ModalHeader>Login</ModalHeader>
+          <ModalHeader><h1>Lazette Letters</h1></ModalHeader>
           <ModalBody>
+            <h3>Lazette publishes out monthly free magazines and blog articles</h3>
+            <h4>Fill the form to avail these and become a part of Familia di Lazette</h4>
+            <hr className="display-1" />
             <Form onSubmit={this.handleLogin}>
               <FormGroup>
                 <Label htmlFor="username">Username</Label>
@@ -138,12 +133,12 @@ class Header extends Component {
                 />
               </FormGroup>
               <FormGroup>
-                <Label htmlFor="password">Password</Label>
+                <Label htmlFor="email">Email-Id</Label>
                 <Input
-                  type="password"
-                  id="password"
-                  name="password"
-                  innerRef={(input) => (this.password = input)}
+                  type="email"
+                  id="email"
+                  name="email"
+                  innerRef={(input) => (this.email = input)}
                 />
               </FormGroup>
               <FormGroup check>
@@ -153,11 +148,12 @@ class Header extends Component {
                     name="remember"
                     innerRef={(input) => (this.remember = input)}
                   />
-                  Remember me
+                  Check-Tick to Ensure Submission
                 </Label>
               </FormGroup>
+              <hr className="display-1" />
               <Button type="submit" value="submit" color="primary">
-                Login
+                Revieve Lazette Letters
               </Button>
             </Form>
           </ModalBody>
@@ -168,3 +164,4 @@ class Header extends Component {
 }
 
 export default Header;
+
