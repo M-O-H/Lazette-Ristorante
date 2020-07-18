@@ -15,6 +15,7 @@
   background-color: #ffc548bb;
   margin: 0px auto;
   padding: 20px 0px 20px 0px;
+  bottom: 0px;
 }
 .jumbotron {
   padding: 70px 30px 70px 30px;
@@ -22,7 +23,10 @@
   background: #ffc548bb;
   color: rgb(83, 72, 50);
   font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  font-size: large;
 }
+
+
 
 address {
   font-size: 80%;
@@ -56,21 +60,26 @@ address {
 }
 
 .div1{
-  background-image: url('./components/images/back.jpg');
+  /* background-image: url('./components/images/back.jpg'); */
+  background-image: linear-gradient(#fff,#5c4921ec);
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
   /* This is for PARALLAX */
   /* background-attachment: fixed; */
-  height:1000px;
+  /* height:1000px; */
   width: auto;
   /* max-width: 100%; */
   /* max-height: 100%; */
   /* display: block; */
-  color: #ffd476ec;
+  color: rgb(83, 72, 50);
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-style: italic;
+  font-weight: 550;
+
 }
 .div1 .placeText{
-   padding-top: 400px;
+   /* padding-top: 400px; */
    padding-left: 10px;
    font-size: 50px;
    font-weight: bold;
@@ -85,12 +94,100 @@ address {
   font-size: large;
 }
 .Mynav{
-  color: #ffd476ec;
-  background-color: #ffd476ec;
+  color: #ffd884ec;
+  background-color: rgb(83, 72, 50);
 }
 .nav-link{
-  color: rgb(83, 72, 50);
+  color: #ffd884ec;
+  font-size: 17.5px;
 }
+
+.toggler-nav{
+  color: rgb(83, 72, 50);
+  background-color: #ffd884ec;
+  font-size: 22px;
+}
+.no-tediuos{
+  background-color: burlywood;
+}
+.div2{
+  /* background-image: url('https://firebasestorage.googleapis.com/v0/b/confusionserver-3dbbc.appspot.com/o/images%2Fback.jpg?alt=media&token=1f117fb2-6f6b-4350-9fdd-b838f1e23d24'); */
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  color: rgb(255, 248, 183);
+
+  /* background-position: center; */
+  /* height: 400px; */
+  width: auto;
+
+  /* background-color: lightsalmon; */
+}
+.intro{
+  font-size: 22px;
+  /* font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif; */
+  /* font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; */
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-style: italic;
+  padding-top: 15px;
+  color: aliceblue;
+  font-weight: 600;
+}
+.intro-header{
+  font-size: larger;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font-style: italic;
+}
+.tryrecipeman{
+  margin-bottom: 10px;
+  font-size: large;
+}
+.joey-image{
+  margin-top: 0px;
+  width: 500px;
+  height: auto;
+}
+.dalgona{
+  font-style: oblique;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  margin-bottom: 0px;
+}
+.lock-down{
+  font-weight: 600;
+  background-color: brown;
+}
+.recipeManText{
+  font-size: 30px;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  font: outline;
+  background-color: crimson;
+}
+
+.stay-at-home{
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  margin-left: 2px;
+  font-size: 30px;
+  color: cornsilk;
+  background-color: crimson;
+  background-clip: padding-box;
+}
+
+.chef-image{
+  height: 50px;
+  margin-top: 10.5px;
+}
+
+.login-color{
+  color: rgb(83, 72, 50);
+  background-image: linear-gradient(#fff,#ffd884ec);
+  font-size: 18px;
+  font-weight: 600;
+}
+.login-name{
+  font-size: large;
+  font-weight: bold;
+}
+
 .schbut{
   margin-top: 10px;
 }
@@ -99,5 +196,39 @@ address {
   background-color: rgb(83, 72, 50);
 }
 .container .abt-shade{
-  background-image: linear-gradient(#fff,#ffd476ec);
+  background-image: linear-gradient(#fff,#ffd884ec);
+}
+
+.recipe-card{
+  margin-top: 2.5px;
+  animation-name: initial;
+  background-color: tan;
+}
+
+.hero-image{
+  /* position: fixed ; */
+  /* padding-bottom: 500px; */
+  height: 110px;
+}
+
+.menuItems{
+  color: #0f0f0f;
+  font-size: larger;
+}
+
+.wallpaper{
+  height: 600px;
+  width: auto;
+}
+
+.recipecomponent-text{
+  font-size: larger;
+}
+.made-with-love{
+  /* color: rgb(17, 67, 117); */
+  color: dodgerblue;
+  font-weight: 600;
+}
+.heart-color{
+  color: crimson;
 }

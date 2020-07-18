@@ -1,126 +1,93 @@
-import React from "react";
-import {
-  Card,
-  CardImg,
-  CardText,
-  CardBody,
-  CardTitle,
-  CardSubtitle,
-  Button,
-  Toast,
-  ToastBody,
-  ToastHeader,
-  Jumbotron,
-  Container
-} from "reactstrap";
-import { Loading } from "./LoadingComponent";
-import { baseUrl } from "../shared/baseUrl";
-import { FadeTransform } from "react-animation-components";
+import React from 'react';
+import { Card, CardImg, CardText, CardBody, CardTitle, CardSubtitle, CardImgOverlay } from 'reactstrap';
+import { Loading } from './LoadingComponent';
+import { FadeTransform } from 'react-animation-components';
 
-// Since we passed one item (say dish, promotion), we destructure it in {item}
-// Also, only leaders have designation != null
 function RenderCard({ item, isLoading, errMess }) {
-  if (isLoading) {
-    return <Loading />;
-  } else if (errMess) {
-    return <h4>{errMess}</h4>;
-  } else {
-    return (
-      <FadeTransform
-        in
-        transformProps={{
-          exitTransform: "scale(0.5) translateY(-50%)",
-        }}
-      >
-        <Card>
-          <CardImg src={baseUrl + item.image} alt={item.name} />
-          <CardBody>
-            <CardTitle>{item.name}</CardTitle>
-            {item.designation ? (
-              <CardSubtitle>{item.designation}</CardSubtitle>
-            ) : null}
-            <CardText>{item.description}</CardText>
-          </CardBody>
-        </Card>
-      </FadeTransform>
-    );
-  }
+    if (isLoading) {
+        return (
+            <Loading />
+        );
+    }
+    else if (errMess) {
+        return (
+            <h4>{errMess}</h4>
+        );
+    }
+    else
+        return (
+            <FadeTransform in
+                transformProps={{
+                    exitTransform: 'scale(0.5) translateY(-50%)'
+                }}>
+                <Card>
+                    <CardImg src={item.image} alt={item.name} />
+                    <CardBody>
+                        <CardTitle>{item.name}</CardTitle>
+                        {item.designation ? <CardSubtitle>{item.designation}</CardSubtitle> : null}
+                        <CardText>{item.description}</CardText>
+                    </CardBody>
+                </Card>
+            </FadeTransform>
+        );
 }
 
-// var div1 = {
-//   backgroundImage: `url(${back})`,
-//   backgroundSize: "cover",
-//   width: "100%",
-//   height: "800px",
-//   color: "#fff",
-// }
-
-
-// We receive dish, promotion, leader as props from MainComponent and pass it to RenderCard Component
 function Home(props) {
-  return (
-    <div className="div0">
-      <div className="div1 col-12 col-md-12 col-sm-12 col-xl-12" >
-        <h1 className="placeText">LAZETTE</h1>
-        <h2 className="homeh2">The place where you relish! with an open heart.</h2>
-        <p className="homep">We take inspiration from the World's best cuisines, and create
-        a unique fusion experience.
-        <br />Our lipsmacking creations will
-      tickle your culinary senses!</p>
-        <p>Also, stuck at home, try different recipes from out RecipieMan!</p>
-      </div>
-      <div className="container-fluid">
-        <Jumbotron fluid>
-          <Container fluid>
-            <div className="container-fluid">
-              <div className="row row-header">
-                <div className="col-12 col-sm-6">
-                  <h1>STUCK AT HOME?</h1>
-                  <p>TRY OUT OUR RECIPIE MAN!</p>
-                  <p className="">Tired of Dalgona, Momos, Pizza, Maggi and blah blah blah?</p>
-                  <p className="">Try our RECIPIE MAN for free to get new ideas during your homestay...</p>
-                  <a
-                    role="button"
-                    className="btn btn-danger btn-lg"
-                    href="/recipie"
-                  >
-                    <i className="fa fa-cutlery"></i> RECIPIE MAN :P
-                </a>
+    return (
+        <div className="container">
+            <div className="container div1">
+                <div className="row align-items-start">
+                    <div className="col-12 col-md m-1">
+                        <RenderCard item={props.dish}
+                            isLoading={props.dishesLoading}
+                            errMess={props.dishesErrMess} />
+                    </div>
+                    <div className="col-12 col-md m-1">
+                        <RenderCard item={props.promotion}
+                            isLoading={props.promosLoading}
+                            errMess={props.promosErrMess} />
+                    </div>
+                    <div className="col-12 col-md m-1">
+                        <RenderCard item={props.leader}
+                            isLoading={props.leaderLoading}
+                            errMess={props.leaderErrMess} />
+                    </div>
                 </div>
-                <div className="col-12 col-sm-6">
-                  <img src="https://images.pexels.com/photos/887827/pexels-photo-887827.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260" className="img-fluid" alt="Responsive image"></img>
-                </div>
-              </div>
             </div>
-          </Container>
-        </Jumbotron>
-        <div className="row align-items-start div2">
-          <div className="col-12 col-md m-1">
-            <RenderCard
-              item={props.dish}
-              isLoading={props.dishesLoading}
-              errMess={props.dishesErrMess}
-            />
-          </div>
-          <div className="col-12 col-md m-1">
-            <RenderCard
-              item={props.promotion}
-              isLoading={props.promoLoading}
-              errMess={props.promoErrMess}
-            />
-          </div>
-          <div className="col-12 col-md m-1">
-            <RenderCard
-              item={props.leader}
-              isLoading={props.leaderLoading}
-              errMess={props.leaderErrMess}
-            />
-          </div>
-        </div>
-      </div>
 
-    </div >
-  );
+            <Card>
+                <CardImg src="https://firebasestorage.googleapis.com/v0/b/confusionserver-3dbbc.appspot.com/o/images%2Fback.jpg?alt=media&token=1f117fb2-6f6b-4350-9fdd-b838f1e23d24" alt="Wallpaper" className="wallpaper" />
+                <CardImgOverlay>
+                    <CardTitle className="menuItems">
+                        <div className="container div2">
+                            <div className="row row-header">
+                                <div className="col-12 col-sm-9 intro">
+                                    <h2>Introducing.....</h2>
+                                    <h1><strong className="lock-down">The Recipe Man!</strong></h1>
+                                    <hr className="my-1" />
+                                    <h4>Bored amidst the <em className="lock-down">Lockdown??</em></h4>
+                                    <p className="dalgona">We know you are tired of Dalgona Coffee, Momos, Noodles and what not!</p>
+                                    <p className="dalgona">Why not try our new <em>free</em> recipe finder and get <strong>authentic & healthy</strong> recepies at home?</p>
+                                    <p></p>
+                                    <hr className="my-2" />
+                                    <h5 className="mr-auto">Find 'Immunity Friendly' recepies only at <strong className="recipeManText">#RecipeMan</strong>.</h5>
+                                    <a role="button" className="btn btn-danger tryrecipeman" href="/recipie"><i className="fa fa-cutlery fa-lg"></i> Try Recipe Man Now!</a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </CardTitle>
+                </CardImgOverlay>
+            </Card>
+
+        </div>
+    );
 }
 
 export default Home;
+
+// <div className="col-12 col-sm-3">
+// <img src="https://firebasestorage.googleapis.com/v0/b/confusionserver-3dbbc.appspot.com/o/images%2Foriginal.png?alt=media&token=b75db7df-0ec8-42c6-be83-52e258efa4b9" className="rounded img-fluid joey-image" alt="Responsive Joey"></img>
+// <h4 className="stay-at-home">  #StayAtHome</h4>
+// <h4 className="stay-at-home">  #EatLikeJoey</h4>
+// </div>

@@ -1,34 +1,30 @@
-import { createStore, combineReducers, applyMiddleware } from "redux";
-import { createForms } from "react-redux-form";
-
-import { InitialFeedback } from "./forms";
-
-// createStore allows us to creater the Store
-import { Dishes } from "./dishes";
-import { Comments } from "./comments";
-import { Promotions } from "./promotions";
-import { Leaders } from "./leaders";
-
-// Middleware
-import thunk from "redux-thunk";
-import logger from "redux-logger";
+import { createStore, combineReducers, applyMiddleware } from 'redux';
+import { createForms } from 'react-redux-form';
+import { Dishes } from './dishes';
+import { Comments } from './comments';
+import { Promotions } from './promotions';
+import { Leaders } from './leaders';
+import { favorites } from './favorites';
+import { Auth } from './auth';
+import thunk from 'redux-thunk';
+import logger from 'redux-logger';
+import { InitialFeedback } from './forms';
 
 export const ConfigureStore = () => {
-  const store = createStore(
-    combineReducers({
-      dishes: Dishes,
-      comments: Comments,
-      promotions: Promotions,
-      leaders: Leaders,
-      // Whats this?
-      ...createForms({
-        feedback: InitialFeedback, // To reset the
-        // form to its original state after submitting it.
-      }),
-    }),
-    applyMiddleware(thunk, logger)
-  );
+    const store = createStore(
+        combineReducers({
+            dishes: Dishes,
+            comments: Comments,
+            promotions: Promotions,
+            leaders: Leaders,
+            auth: Auth,
+            favorites,
+            ...createForms({
+                feedback: InitialFeedback
+            })
+        }),
+        applyMiddleware(thunk, logger)
+    );
 
-  // Return the Created Store.
-  return store;
-};
+    return store;
+}

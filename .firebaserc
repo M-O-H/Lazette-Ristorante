@@ -1,0 +1,7 @@
+{
+  "projects": {
+    "default": "confusionserver-3dbbc",
+    "hosting-lazette": "ristorante-lazette",
+    "lazette": "ristorante-lazette"
+  }
+}

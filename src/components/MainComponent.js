@@ -1,200 +1,131 @@
-// This is like a Pseudo Container Component which calls the Presentational Components (Quite Obvious)
-// Duplicate App.js
-import React, { Component } from "react";
-// Menu Component
-import Menu from "./MenuComponent";
-// DishDetail import here
-import Dishdetail from "./DishdetailComponent";
-// Header Component
-import Header from "./HeaderComponent";
-// Footer Component
-import Footer from "./FooterComponent";
-// Home Component
-import Home from "./HomeComponent";
-//Contact Component
-import Contact from "./ContactComponent";
-// About Component
-import About from "./AboutComponent";
+import React, { Component } from 'react';
+import Home from './HomeComponent';
+import About from './AboutComponent';
+import Menu from './MenuComponent';
+import Contact from './ContactComponent';
+import DishDetail from './DishdetailComponent';
+import Favorites from './FavoriteComponent';
+import Header from './HeaderComponent';
+import Footer from './FooterComponent';
 // Recipie Component
 import Recipie from "./RecipieComponent";
-// Import the ACTION
-import {
-  postFeedback,
-  postComment,
-  fetchDishes,
-  fetchComments,
-  fetchLeaders,
-  fetchPromos,
-} from "../redux/ActionCreators";
-import { actions } from "react-redux-form";
+import { Switch, Route, Redirect, withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { postComment, postFeedback, fetchDishes, fetchComments, fetchPromos, fetchLeaders, loginUser, logoutUser, fetchFavorites, googleLogin, postFavorite, deleteFavorite } from '../redux/ActionCreators';
+import { actions } from 'react-redux-form';
+import { TransitionGroup, CSSTransition } from 'react-transition-group';
 
-// Router
-import { Switch, Route, Redirect, withRouter } from "react-router-dom";
-// Above withRouter and below are used to connet this MainCompto the REDUX Store.
-import { connect } from "react-redux";
-
-//ANIMATION PART
-import { TransitionGroup, CSSTransition } from "react-transition-group";
-
-// Below function maps state to be available as props to our components
-// state is the state from the reduX Store
-// Whatever we used as this.state.dish (say) will be changed to this.props.dish everywhere.
-const mapStateToProps = (state) => {
+const mapStateToProps = state => {
   return {
     dishes: state.dishes,
     comments: state.comments,
     promotions: state.promotions,
     leaders: state.leaders,
-  };
-};
+    favorites: state.favorites,
+    auth: state.auth
+  }
+}
+
 const mapDispatchToProps = (dispatch) => ({
-  postFeedback: (
-    firstname,
-    lastname,
-    telnum,
-    email,
-    contactType,
-    agree,
-    message
-  ) =>
-    dispatch(
-      postFeedback(
-        firstname,
-        lastname,
-        telnum,
-        email,
-        contactType,
-        agree,
-        message
-      )
-    ),
-  postComment: (dishId, rating, author, comment) =>
-    dispatch(postComment(dishId, rating, author, comment)),
-  fetchDishes: () => {
-    dispatch(fetchDishes());
-  },
-  resetFeedbackForm: () => {
-    dispatch(actions.reset("feedback"));
-  },
-  fetchComments: () => dispatch(fetchComments()),
-  fetchPromos: () => dispatch(fetchPromos()),
+  postComment: (dishId, rating, comment) => dispatch(postComment(dishId, rating, comment)),
+  fetchDishes: () => { dispatch(fetchDishes()) },
+  resetFeedbackForm: () => { dispatch(actions.reset('feedback')) },
+  fetchComments: () => { dispatch(fetchComments()) },
+  fetchPromos: () => { dispatch(fetchPromos()) },
   fetchLeaders: () => dispatch(fetchLeaders()),
+  postFeedback: (feedback) => dispatch(postFeedback(feedback)),
+  loginUser: (creds) => dispatch(loginUser(creds)),
+  logoutUser: () => dispatch(logoutUser()),
+  fetchFavorites: () => dispatch(fetchFavorites()),
+  googleLogin: () => dispatch(googleLogin()),
+  postFavorite: (dishId) => dispatch(postFavorite(dishId)),
+  deleteFavorite: (dishId) => dispatch(deleteFavorite(dishId))
 });
 
 class Main extends Component {
-  constructor(props) {
-    super(props);
-    //this.state = {};
-  }
 
-  // Executes as soon as a Component is Mounted.
   componentDidMount() {
     this.props.fetchDishes();
     this.props.fetchComments();
     this.props.fetchPromos();
     this.props.fetchLeaders();
+    this.props.fetchFavorites();
   }
 
-  // One way to Render a Component is like- const HomePage one.
-  // One is like to render the Menu component i.e. 'inline'
+  componentWillUnmount() {
+    this.props.logoutUser();
+  }
+
   render() {
+
     const HomePage = () => {
       return (
-        <Home
-          dish={this.props.dishes.dishes.filter((dish) => dish.featured)[0]}
-          // Only That dish will go which is featured=true in dishes object array.
-          // We pass 'dish' as props to Home Component
+        <Home dish={this.props.dishes.dishes.filter((dish) => dish.featured)[0]}
           dishesLoading={this.props.dishes.isLoading}
           dishesErrMess={this.props.dishes.errMess}
-          promotion={
-            this.props.promotions.promotions.filter(
-              (promo) => promo.featured
-            )[0]
-          }
-          // lly for promotions
-          // promotion as props to Home Comp.
-          promoLoading={this.props.promotions.isLoading}
-          promoErrMess={this.props.promotions.errMess}
-          leader={
-            this.props.leaders.leaders.filter((leader) => leader.featured)[0]
-          }
-          // leader as props to Home Comp.
+          promotion={this.props.promotions.promotions.filter((promo) => promo.featured)[0]}
+          promosLoading={this.props.promotions.isLoading}
+          promosErrMess={this.props.promotions.errMess}
+          leader={this.props.leaders.leaders.filter((leader) => leader.featured)[0]}
           leaderLoading={this.props.leaders.isLoading}
           leaderErrMess={this.props.leaders.errMess}
         />
       );
-    };
+    }
 
-    // DishwithId is a component.
-    // It passes props- 'dish', 'comments' to Dishdetail Component.
-    // RenderMenuItems passes 3 items as props to this DishWithId Component.
-    // These are match, location, history. [This is default Router thing, we can't do anything].
-    // match- carries the passed route parameters inside it (from RenderManuItem to DishWithId)
-    // We destructure it to {match} prop.
-    // location- where we are in URL location (not used here).
-    // history- the history (not used here).
-    // match object has params match.params has key value pairs. From RenderMenuItem the value passed is dish.id and here we key it as dishId
-    // This dishId is used below in <Route />
-    // parseInt converts string to Integer in base 10, hence 10 is required.
-    // We pass the ONLY DISH whose ID mathches, and the COMMENT ARRAY whose dishId's match.
     const DishWithId = ({ match }) => {
       return (
-        <Dishdetail
-          dish={
-            this.props.dishes.dishes.filter(
-              (dish) => dish.id === parseInt(match.params.dishId, 10)
-            )[0]
-          }
-          isLoading={this.props.dishes.isLoading}
-          errMess={this.props.dishes.errMess}
-          comments={this.props.comments.comments.filter(
-            (comment) => comment.dishId === parseInt(match.params.dishId, 10)
-          )}
-          commentsErrMess={this.props.comments.errMess}
-          postComment={this.props.postComment}
-        />
+        (this.props.auth.isAuthenticated && this.props.favorites.favorites)
+          ?
+          <DishDetail dish={this.props.dishes.dishes.filter((dish) => dish._id === match.params.dishId)[0]}
+            isLoading={this.props.dishes.isLoading}
+            errMess={this.props.dishes.errMess}
+            comments={this.props.comments.comments.filter((comment) => comment.dish === match.params.dishId)}
+            commentsErrMess={this.props.comments.errMess}
+            postComment={this.props.postComment}
+            favorite={this.props.favorites.favorites.dishes.some((dish) => dish === match.params.dishId)}
+            postFavorite={this.props.postFavorite}
+          />
+          :
+          <DishDetail dish={this.props.dishes.dishes.filter((dish) => dish._id === match.params.dishId)[0]}
+            isLoading={this.props.dishes.isLoading}
+            errMess={this.props.dishes.errMess}
+            comments={this.props.comments.comments.filter((comment) => comment.dish === match.params.dishId)}
+            commentsErrMess={this.props.comments.errMess}
+            postComment={this.props.postComment}
+            favorite={false}
+            postFavorite={this.props.postFavorite}
+          />
       );
-    };
+    }
 
-    const AboutPage = () => {
-      return (
-        <About
-          leaders={this.props.leaders.leaders}
-          leaderLoading={this.props.leaders.isLoading}
-          leaderErrMess={this.props.leaders.errMess}
-        />
-      );
-    };
+    const PrivateRoute = ({ component: Component, ...rest }) => (
+      <Route {...rest} render={(props) => (
+        this.props.auth.isAuthenticated
+          ? <Component {...props} />
+          : <Redirect to={{
+            pathname: '/home',
+            state: { from: props.location }
+          }} />
+      )} />
+    );
 
-    // exact keyword for /menu is very very important.
     return (
       <div>
-        <Header />
+        <Header auth={this.props.auth}
+          loginUser={this.props.loginUser}
+          logoutUser={this.props.logoutUser}
+          googleLogin={this.props.googleLogin}
+        />
         <TransitionGroup>
-          <CSSTransition
-            key={this.props.location.key}
-            classNames="page"
-            timeout={300}
-          >
+          <CSSTransition key={this.props.location.key} classNames="page" timeout={300}>
             <Switch>
               <Route path="/home" component={HomePage} />
-              <Route
-                exact
-                path="/menu"
-                component={() => <Menu dishes={this.props.dishes}></Menu>}
-              />
+              <Route exact path='/aboutus' component={() => <About leaders={this.props.leaders} />} />
+              <Route exact path="/menu" component={() => <Menu dishes={this.props.dishes} />} />
               <Route path="/menu/:dishId" component={DishWithId} />
-              <Route
-                exact
-                path="/contactus"
-                component={() => (
-                  <Contact
-                    resetFeedbackForm={this.props.resetFeedbackForm}
-                    postFeedback={this.props.postFeedback}
-                  />
-                )}
-              />
-              <Route exact path="/aboutus" component={AboutPage} />
+              <PrivateRoute exact path="/favorites" component={() => <Favorites favorites={this.props.favorites} dishes={this.props.dishes} deleteFavorite={this.props.deleteFavorite} />} />
+              <Route exact path="/contactus" component={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm} postFeedback={this.props.postFeedback} />} />
               <Route path="/recipie" component={Recipie} />
               <Redirect to="/home" />
             </Switch>
@@ -206,5 +137,4 @@ class Main extends Component {
   }
 }
 
-// CONNECTING TO REACT STORE (The React-Redux Connect)
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(Main));
